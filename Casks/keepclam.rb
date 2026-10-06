@@ -1,6 +1,6 @@
 cask "keepclam" do
-  version "0.2.0"
-  sha256 "2574714ac6f6de322838f64ca52496456e4d9dd042c727b9f4402b8a68cb333d"
+  version "0.2.1"
+  sha256 "8fb5caa354e8149855caa0ece79e26852b51210bd67a2bd8ab9286ae6c812e91"
 
   url "https://github.com/LCROSSY/KeepClam/releases/download/v#{version}/KeepClam-#{version}.zip"
   name "KeepClam"
