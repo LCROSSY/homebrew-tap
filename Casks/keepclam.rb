@@ -1,6 +1,6 @@
 cask "keepclam" do
-  version "0.2.3"
-  sha256 "7862d5bdd8204e3fa75b909de099f59bb67f13968034f6d929eef57d67b60c8e"
+  version "0.2.4"
+  sha256 "ce6a0a3554e9d023da378f78798483f916bc8515f3ca66763d9ca21020962b63"
 
   url "https://github.com/LCROSSY/KeepClam/releases/download/v#{version}/KeepClam-#{version}.zip"
   name "KeepClam"
@@ -11,9 +11,16 @@ cask "keepclam" do
 
   app "KeepClam.app"
 
+  # 与一行命令安装（install.sh --trust）一致：只移除 KeepClam 自身的下载隔离标记，
+  # 否则未公证的应用首次打开会被 Gatekeeper 拦截。
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/KeepClam.app"]
+  end
+
   caveats <<~EOS
     This is a preview release, ad-hoc signed and not notarized by Apple.
-    If macOS blocks the app, review Privacy & Security in System Settings.
+    The cask removes the quarantine attribute from KeepClam.app only,
+    the same as the one-line installer, so it opens without Gatekeeper prompts.
     Before unattended use, configure passwordless authorization in the app.
     Disable Launch at Login, stop the active session and quit before uninstalling.
     Uninstalling does not remove the optional sudoers authorization;
